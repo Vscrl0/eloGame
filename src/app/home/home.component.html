@@ -1,7 +1,8 @@
-<ngx-chess-board #board [size] = "600" [pieceIcons]="icons"></ngx-chess-board>
+<div class = "mt-5" style= "margin-left:30%;" ><ngx-chess-board #board [lightDisabled] = "true" [darkDisabled] = "true" [pieceIcons]="icons" class = "border border-dark"></ngx-chess-board></div>
+<hr>
 <button type="button" class="btn btn-primary" (click) = "loadGame()">Load</button>
-
-
-
 <button type="button" class="btn btn-primary" (click) = "prev()">Back</button>
 <button type="button" class="btn btn-primary" (click) = "next()">Next</button>
+<div class = "col-md-1" *ngFor = "let move of pgnSplitWithoutNums; let i = index" [attr.data-index]="i" [ngStyle]="{'background-color': (i == movePointer - 1) ? '#73c7af' : '#ffffff'}">
+        {{move}}
+</div>

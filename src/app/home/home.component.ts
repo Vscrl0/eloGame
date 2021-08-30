@@ -12,6 +12,9 @@ export class HomeComponent implements OnInit {
 	icons: PieceIconInput;
 	moves!: Array<HistoryMove>;
 	movePointer = 0;
+  pgn = "";
+  pgnSplit = this.pgn.split(' ');
+  pgnSplitWithoutNums!: Array<string>;
 	constructor(private boardService: NgxChessBoardService, private http: HttpClient) {
 		this.icons = {
 			blackBishopUrl: 'assets/img/bB.png',
@@ -36,13 +39,18 @@ export class HomeComponent implements OnInit {
 		this.board.reset();
 	}
 	loadGame() {
-		let pgn = "";
 		this.http.get("http://35.224.173.125/").subscribe(res => {
-			pgn = (res as Game).pgn;
-			this.board.setPGN(pgn);
+			this.pgn = (res as Game).pgn;
+			this.board.setPGN(this.pgn);
 			this.moves = this.board.getMoveHistory();
-			this.movePointer = this.moves.length;
-			console.log(this.moves);
+			this.board.reset();
+      this.pgnSplit = this.pgn.split(' ')
+      this.pgnSplitWithoutNums = [];
+      for(let move of this.pgnSplit) {
+        if (!this.isNumber(move)) {
+          this.pgnSplitWithoutNums.push(move);
+        }
+      }
 		});
 	}
 
@@ -60,5 +68,11 @@ export class HomeComponent implements OnInit {
 
 		}
 	}
-
+  isNumber(s : string) : boolean {
+    if (s.endsWith(".")){
+      return true;
+    }
+    return false;
+  }
+ 
 }
