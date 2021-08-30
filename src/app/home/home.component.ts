@@ -33,8 +33,11 @@ export class HomeComponent implements OnInit {
 	}
 	@ViewChild('board', { static: false }) board!: NgxChessBoardView;
 	ngOnInit(): void {
-
 	}
+  ngAfterViewInit() {
+    this.reset();
+  }
+
 	reset() {
 		this.board.reset();
 	}
