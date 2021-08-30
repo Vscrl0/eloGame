@@ -44,7 +44,7 @@ export class HomeComponent implements OnInit {
 			this.board.setPGN(this.pgn);
 			this.moves = this.board.getMoveHistory();
 			this.board.reset();
-      this.pgnSplit = this.pgn.split(' ')
+      this.pgnSplit = this.pgn.replace(/-/g, '‑').split(' ')
       this.pgnSplitWithoutNums = [];
       for(let move of this.pgnSplit) {
         if (!this.isNumber(move)) {
