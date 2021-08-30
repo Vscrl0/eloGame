@@ -11,6 +11,7 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "~12.2.0",
+    "@angular/cdk": "^12.2.3",
     "@angular/common": "~12.2.0",
     "@angular/compiler": "~12.2.0",
     "@angular/core": "~12.2.0",
@@ -18,8 +19,14 @@
     "@angular/platform-browser": "~12.2.0",
     "@angular/platform-browser-dynamic": "~12.2.0",
     "@angular/router": "~12.2.0",
+    "@chrisoakman/chessboardjs": "^1.0.0",
+    "bootstrap": "^5.1.0",
+    "chess.js": "^0.12.0",
+    "chessboardjsx": "^2.4.7",
+    "chessground": "^8.1.7",
+    "ngx-chess-board": "^2.1.14",
     "rxjs": "~6.6.0",
-    "tslib": "^2.3.0",
+    "tslib": "^2.3.1",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
