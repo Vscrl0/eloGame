@@ -7,10 +7,12 @@ import { HomeComponent } from './home/home.component';
 import { NgxChessBoardModule } from "ngx-chess-board";
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { GuesserComponent } from './guesser/guesser.component';
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    GuesserComponent
   ],
   imports: [
     BrowserModule,
