@@ -12,9 +12,11 @@ export class HomeComponent implements OnInit {
 	icons: PieceIconInput;
 	moves!: Array<HistoryMove>;
 	movePointer = 0;
-  pgn = "";
-  pgnSplit = this.pgn.split(' ');
-  pgnSplitWithoutNums!: Array<string>;
+	pgn = "";
+	pgnSplit = this.pgn.split(' ');
+	pgnSplitWithoutNums!: Array<string>;
+	pgnScore="";
+
 	constructor(private boardService: NgxChessBoardService, private http: HttpClient) {
 		this.icons = {
 			blackBishopUrl: 'assets/img/bB.png',
@@ -34,26 +36,31 @@ export class HomeComponent implements OnInit {
 	@ViewChild('board', { static: false }) board!: NgxChessBoardView;
 	ngOnInit(): void {
 	}
-  ngAfterViewInit() {
-    this.reset();
-  }
+	ngAfterViewInit() {
+		// this.reset();
+		this.board.setFEN("8/8/p2p1QNK/n2r2R1/bqkp2B1/r2b2N1/p2n1BPR/8 w - - 0 1");
+	}
 
 	reset() {
 		this.board.reset();
+		this.movePointer = 0;
 	}
 	loadGame() {
 		this.http.get("http://35.224.173.125/").subscribe(res => {
 			this.pgn = (res as Game).pgn;
 			this.board.setPGN(this.pgn);
 			this.moves = this.board.getMoveHistory();
-			this.board.reset();
-      this.pgnSplit = this.pgn.replace(/-/g, '‑').split(' ')
-      this.pgnSplitWithoutNums = [];
-      for(let move of this.pgnSplit) {
-        if (!this.isNumber(move)) {
-          this.pgnSplitWithoutNums.push(move);
-        }
-      }
+			this.reset();
+			this.pgnSplit = this.pgn.replace(/-/g, '‑').split(' ')
+			this.pgnSplitWithoutNums = [];
+			for (let move of this.pgnSplit) {
+				if (!this.isNumber(move)) {
+					this.pgnSplitWithoutNums.push(move);
+				}
+			}
+			this.pgnScore = this.pgnSplitWithoutNums.pop() as string;
+			console.log(this.pgnSplitWithoutNums[3]);
+			
 		});
 	}
 
@@ -65,17 +72,17 @@ export class HomeComponent implements OnInit {
 		}
 	}
 	next() {
-		if(this.movePointer!==this.moves.length){
+		if (this.movePointer !== this.moves.length) {
 			this.board.move(this.moves[this.movePointer].move);
 			this.movePointer++;
 
 		}
 	}
-  isNumber(s : string) : boolean {
-    if (s.endsWith(".")){
-      return true;
-    }
-    return false;
-  }
- 
+	isNumber(s: string): boolean {
+		if (s.endsWith(".")) {
+			return true;
+		}
+		return false;
+	}
+
 }
