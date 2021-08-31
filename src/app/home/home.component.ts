@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
 import { HistoryMove, NgxChessBoardService, PieceIconInput } from 'ngx-chess-board';
 import { NgxChessBoardView } from 'ngx-chess-board';
 import Game from '../models/game';
@@ -11,11 +12,13 @@ import Game from '../models/game';
 export class HomeComponent implements OnInit {
 	icons: PieceIconInput;
 	moves!: Array<HistoryMove>;
-	movePointer = 0;
+	movePointer=new FormControl(0);
 	pgn = "";
 	pgnSplit = this.pgn.split(' ');
 	pgnSplitWithoutNums!: Array<string>;
 	pgnScore="";
+
+	test=55;
 
 	constructor(private boardService: NgxChessBoardService, private http: HttpClient) {
 		this.icons = {
@@ -41,15 +44,17 @@ export class HomeComponent implements OnInit {
 		this.board.setFEN("8/8/p2p1QNK/n2r2R1/bqkp2B1/r2b2N1/p2n1BPR/8 w - - 0 1");
 	}
 
-	reset() {
-		this.board.reset();
-		this.movePointer = 0;
-	}
 	loadGame() {
 		this.http.get("http://35.224.173.125/").subscribe(res => {
 			this.pgn = (res as Game).pgn;
+			console.log(this.pgn);
+			
 			this.board.setPGN(this.pgn);
 			this.moves = this.board.getMoveHistory();
+			console.log(this.moves.length)
+
+			//this.movePointer=new FormControl(0,[Validators.max(this.moves.length),Validators.min(0)]);
+			
 			this.reset();
 			this.pgnSplit = this.pgn.replace(/-/g, '‑').split(' ')
 			this.pgnSplitWithoutNums = [];
@@ -58,30 +63,50 @@ export class HomeComponent implements OnInit {
 					this.pgnSplitWithoutNums.push(move);
 				}
 			}
-			this.pgnScore = this.pgnSplitWithoutNums.pop() as string;
-			console.log(this.pgnSplitWithoutNums[3]);
-			
+			this.pgnScore = this.pgnSplitWithoutNums.pop() as string;			
 		});
 	}
 
 
+	reset() {
+		this.board.reset();
+		this.movePointer.setValue(0);
+	}
 	prev() {
-		if (this.movePointer !== 0) {
+		if (this.movePointer.value !== 0) {
 			this.board.undo();
-			this.movePointer--;
+			this.movePointer.setValue(this.movePointer.value-1);
 		}
 	}
 	next() {
-		if (this.movePointer !== this.moves.length) {
-			this.board.move(this.moves[this.movePointer].move);
-			this.movePointer++;
-
+		if (this.movePointer.value !== this.moves.length) {
+			this.board.move(this.moves[this.movePointer.value].move);
+			this.movePointer.setValue(this.movePointer.value+1);
 		}
 	}
 	end(){
 		this.board.setPGN(this.pgn);
-		this.movePointer = this.moves.length;
+		this.movePointer.setValue(this.moves.length);
 	}
+	goto(i:number){
+		if(i<=0){
+			this.reset();
+		}
+		else if(i>=this.moves.length){
+			this.end();
+		}
+		else{
+			let sp=this.pgn.split(" ");
+			let newI=i+Math.floor((i-1)/2)+1;
+			//l);
+			
+			this.board.setPGN(sp.slice(0,newI).join(' '));
+
+			this.movePointer.setValue(i);
+		}
+	}
+
+
 	isNumber(s: string): boolean {
 		if (s.endsWith(".")) {
 			return true;

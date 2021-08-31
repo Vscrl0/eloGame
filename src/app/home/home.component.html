@@ -9,6 +9,10 @@
 				class="border border-dark"></ngx-chess-board>
 		</div>
 		<hr>
+
+		<input *ngIf="pgn!==''" type="range" class="form-range" max={{moves.length}} id="pointer"
+		 [formControl]="movePointer" (change)="goto(movePointer.value)">
+
 		<div class="d-flex justify-content-center">
 			<button type="button" class="btn btn-success" (click)="loadGame()">Load</button>
 
@@ -27,6 +31,10 @@
 						d="M4 4a.5.5 0 0 1 1 0v3.248l6.267-3.636c.54-.313 1.232.066 1.232.696v7.384c0 .63-.692 1.01-1.232.697L5 8.753V12a.5.5 0 0 1-1 0V4z" />
 				</svg>
 			</button>
+
+			<!-- <button type="button" class="btn btn-success" (click)="goto(9)">i</button> -->
+			<button type="button" class="btn btn-dark" disabled>{{movePointer.value}}</button>
+			
 
 			<button type="button" class="btn btn-primary" (click)="next()">
 				<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-skip-end-fill" viewBox="0 0 16 16">
@@ -54,11 +62,11 @@
 		<router-outlet></router-outlet>
 
 		<!-- pgn -->
-		<div class="pgn-container mx-auto mt-5 p-2 border border-dark">
+		<div *ngIf="pgn!==''" class="pgn-container mx-auto mt-5 p-2 border border-dark">
 			<span *ngFor="let move of pgnSplitWithoutNums; let i = index" [attr.data-index]="i">
 				<span *ngIf="i%2===0">{{"  "+(1+i/2)+". "}}</span>
 				<span class="pgn-move"
-					[ngStyle]="{'background-color': (i == movePointer - 1) ? '#73c7af' : '#ffffff'}">{{move}}</span>
+					[ngStyle]="{'background-color': (i == movePointer.value - 1) ? '#73c7af' : '#ffffff'}">{{move}}</span>
 				<span>{{" "}}</span>
 			</span>
 
