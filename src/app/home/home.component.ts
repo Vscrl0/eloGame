@@ -37,7 +37,8 @@ export class HomeComponent implements OnInit {
 	ngOnInit(): void {
 	}
 	ngAfterViewInit() {
-		this.reset();
+		// this.reset();
+		this.board.setFEN("8/8/p2p1QNK/n2r2R1/bqkp2B1/r2b2N1/p2n1BPR/8 w - - 0 1");
 	}
 
 	reset() {
