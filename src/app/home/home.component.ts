@@ -78,6 +78,10 @@ export class HomeComponent implements OnInit {
 
 		}
 	}
+	end(){
+		this.board.setPGN(this.pgn);
+		this.movePointer = this.moves.length;
+	}
 	isNumber(s: string): boolean {
 		if (s.endsWith(".")) {
 			return true;
