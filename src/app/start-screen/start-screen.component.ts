@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { EloService } from '../services/elo.service';
 
 @Component({
   selector: 'app-start-screen',
@@ -6,10 +7,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./start-screen.component.css']
 })
 export class StartScreenComponent implements OnInit {
+	gameCount!:number;
 
-  constructor() { }
+  constructor(public eloService: EloService) { }
 
   ngOnInit(): void {
+  }
+
+  startGame(count:number){
+	this.eloService.startGame(!count?5:count);
   }
 
 }
