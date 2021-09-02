@@ -19,12 +19,12 @@
 						<label for="guess" class="col-form-label">Guess</label>
 					</div>
 					<div class="col-3">
-						<input type="number" id="guess" class="form-control">
+						<input [(ngModel)] = "guess" type="number" id="guess" class="form-control">
 					</div>
 				</div>
 				<div class="row g-3 mt-1 justify-content-center">
 					<div class="col-3">
-						<button class="btn btn-secondary px-3">Submit</button>
+						<button class="btn btn-secondary px-3" (click) = "setScore(guess)">Submit</button>
 					</div>
 				</div>
 
@@ -43,7 +43,8 @@
 
 
 				<div class="row g-3 mt-2 justify-content-center">
-					0
+					{{score}} / 2000
+					
 				</div>
 
 

@@ -8,19 +8,22 @@ import { NgxChessBoardModule } from "ngx-chess-board";
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { GuesserComponent } from './guesser/guesser.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StartScreenComponent } from './start-screen/start-screen.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     GuesserComponent,
     StartScreenComponent
+    
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgxChessBoardModule.forRoot(),
+    FormsModule,
 	ReactiveFormsModule,
     HttpClientModule
   ],

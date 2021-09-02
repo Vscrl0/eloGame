@@ -4,6 +4,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { HistoryMove, NgxChessBoardService, PieceIconInput } from 'ngx-chess-board';
 import { NgxChessBoardView } from 'ngx-chess-board';
 import Game from '../models/game';
+import { EloService } from '../services/elo.service';
 @Component({
 	selector: 'app-home',
 	templateUrl: './home.component.html',
@@ -17,10 +18,10 @@ export class HomeComponent implements OnInit {
 	pgnSplit = this.pgn.split(' ');
 	pgnSplitWithoutNums!: Array<string>;
 	pgnScore="";
-
+  avgElo!: number;
 	test=55;
 
-	constructor(private boardService: NgxChessBoardService, private http: HttpClient) {
+	constructor(private boardService: NgxChessBoardService, private http: HttpClient, private eloService: EloService) {
 		this.icons = {
 			blackBishopUrl: 'assets/img/bB.png',
 			blackKingUrl: 'assets/img/bK.png',
@@ -52,7 +53,8 @@ export class HomeComponent implements OnInit {
 			this.board.setPGN(this.pgn);
 			this.moves = this.board.getMoveHistory();
 			console.log(this.moves.length)
-
+      this.avgElo = Math.floor(((res as Game).white_elo + (res as Game).black_elo)/2)
+      this.eloService.getElo(this.avgElo);
 			//this.movePointer=new FormControl(0,[Validators.max(this.moves.length),Validators.min(0)]);
 			
 			this.reset();
