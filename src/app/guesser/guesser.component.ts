@@ -13,7 +13,9 @@ export class GuesserComponent implements OnInit {
   constructor(private eloService: EloService) { }
 
   ngOnInit(): void {
-
+	if(!this.eloService.gameCount){
+		this.eloService.goHome();
+	}
   }
   ngDoCheck(): void {
     this.eloService.getElo$.subscribe( data => {this.avgElo = data as number;})

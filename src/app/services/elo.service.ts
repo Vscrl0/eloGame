@@ -40,4 +40,10 @@ export class EloService {
 		this.nextGame();
 		this.router.navigate(["guess"]);
 	}
+
+
+
+	goHome(){
+		this.router.navigate([""]);
+	}
 }
