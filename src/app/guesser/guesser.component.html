@@ -11,14 +11,14 @@
 				Maybe some text here with extra info and stuff but idk.
 			</div>
 
-			<form *ngIf="score===-1; else elseBlock" (ngSubmit)="setScore(guess)">
+			<form *ngIf="score===-1; else elseBlock" (ngSubmit)="setScore(guess.value)">
 				<div class="row g-3 mt-2 justify-content-center">
 
 					<div class="col-auto">
 						<label for="guess" class="col-form-label">Guess</label>
 					</div>
 					<div class="col-3">
-						<input [(ngModel)]="guess" type="number" id="guess" class="form-control">
+						<input [formControl]="guess" type="number" id="guess" class="form-control">
 					</div>
 				</div>
 				<div class="row g-3 mt-1 justify-content-center">
@@ -27,11 +27,17 @@
 					</div>
 				</div>
 			</form>
-			
+
 			<ng-template #elseBlock>
 				<div class="row g-3 mt-1 justify-content-center">
-					<div class="col-3">
-						You scored: {{score}}/2000
+					<div class="col-6">
+						<div>
+							You scored: {{score}}/2000
+						</div>
+						<div>
+							You guessed {{guess.value}} but the real ELO was {{avgElo}}.
+						</div>
+
 					</div>
 				</div>
 
@@ -58,12 +64,12 @@
 
 			<div class="row g-3">
 				<div class="col">
-					
+
 				</div>
 				<div class="col-4">
 					<h5 class="card-title">Total Score</h5>
 					{{totalScore}}
-					
+
 				</div>
 				<div class="col"></div>
 
