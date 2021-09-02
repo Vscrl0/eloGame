@@ -25,8 +25,9 @@ export class GuesserComponent implements OnInit {
 	setScore(elo: number) {
 		console.log(this.guess+":"+elo);
 		
-		this.score = Math.abs(elo - this.avgElo);
+		//this.score = Math.abs(elo - this.avgElo);
 		// this.score = Math.max(0, 2000 - Math.abs(elo - this.avgElo));
+		this.score = Math.floor(1000/(Math.sqrt(0.00002*Math.pow((this.avgElo-elo), 2) + 1)));
 		this.totalScore += this.score;
 	}
 
