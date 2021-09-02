@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { EloService } from '../services/elo.service';
 
 @Component({
@@ -9,7 +10,7 @@ import { EloService } from '../services/elo.service';
 export class GuesserComponent implements OnInit {
 	avgElo = 0;
 	score = -1;
-	guess = 0;
+	guess = new FormControl();
 	totalScore = 0;
 	constructor(private eloService: EloService) { }
 
@@ -22,12 +23,17 @@ export class GuesserComponent implements OnInit {
 		this.eloService.getElo$.subscribe(data => { this.avgElo = data as number; })
 	}
 	setScore(elo: number) {
-		this.score = Math.max(0, 2000 - Math.abs(elo - this.avgElo));
+		console.log(this.guess+":"+elo);
+		
+		//this.score = Math.abs(elo - this.avgElo);
+		// this.score = Math.max(0, 2000 - Math.abs(elo - this.avgElo));
+		this.score = Math.floor(1000/(Math.sqrt(0.00002*Math.pow((this.avgElo-elo), 2) + 1)));
 		this.totalScore += this.score;
 	}
 
 	nextGame() {
 		this.score = -1;
+		this.guess.setValue("");
 		this.eloService.nextGame();
 	}
 }
