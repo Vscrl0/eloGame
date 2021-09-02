@@ -14,7 +14,7 @@
 				[formControl]="movePointer" (change)="goto(movePointer.value)">
 
 			<div class="d-flex justify-content-center">
-				<button type="button" class="btn btn-success" (click)="eloService.nextGame()">Load</button>
+				<!-- <button type="button" class="btn btn-success" (click)="eloService.nextGame()">Load</button> -->
 
 				<button type="button" class="btn btn-primary" (click)="reset()">
 					<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
@@ -33,7 +33,7 @@
 				</button>
 
 				<!-- <button type="button" class="btn btn-success" (click)="goto(9)">i</button> -->
-				<button type="button" class="btn btn-dark" disabled>{{movePointer.value}}</button>
+				<button type="button" class="btn btn-dark" disabled>{{M.ceil(movePointer.value/2)}}</button>
 
 
 				<button type="button" class="btn btn-primary" (click)="next()">

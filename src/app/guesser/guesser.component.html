@@ -2,56 +2,78 @@
 <!-- remove container -->
 
 
-	<div class="card text-white bg-primary text-center">
-		<div class="card-body">
-			<h5 class="card-title">ELOguesser</h5>
-			<div class="card-text">
+<div class="card text-white bg-primary text-center">
+	<div class="card-body">
+		<h5 class="card-title">ELOguesser</h5>
+		<div class="card-text">
 
+			<div class="row g-3 mt-2 justify-content-center">
+				Maybe some text here with extra info and stuff but idk.
+			</div>
 
-				<div class="row g-3 mt-2 justify-content-center">
-
-					Maybe some text here with extra info and stuff but idk.
-				</div>
-
+			<form *ngIf="score===-1; else elseBlock" (ngSubmit)="setScore(guess)">
 				<div class="row g-3 mt-2 justify-content-center">
 
 					<div class="col-auto">
 						<label for="guess" class="col-form-label">Guess</label>
 					</div>
 					<div class="col-3">
-						<input [(ngModel)] = "guess" type="number" id="guess" class="form-control">
+						<input [(ngModel)]="guess" type="number" id="guess" class="form-control">
 					</div>
 				</div>
 				<div class="row g-3 mt-1 justify-content-center">
 					<div class="col-3">
-						<button class="btn btn-secondary px-3" (click) = "setScore(guess)">Submit</button>
+						<button class="btn btn-secondary px-3" type="submit">Submit</button>
+					</div>
+				</div>
+			</form>
+			
+			<ng-template #elseBlock>
+				<div class="row g-3 mt-1 justify-content-center">
+					<div class="col-3">
+						You scored: {{score}}/2000
 					</div>
 				</div>
 
+				<div class="row g-3 mt-1 justify-content-center">
+					<div class="col-3">
+						<button class="btn btn-success px-3" (click)="nextGame()">Next</button>
+					</div>
+				</div>
+			</ng-template>
 
 
-			</div>
+
 		</div>
 	</div>
+</div>
 
 
 
-	<div class="card text-white bg-primary text-center mt-4">
-		<div class="card-body">
-			<h5 class="card-title">Score</h5>
-			<div class="card-text">
+<div class="card text-white bg-primary text-center mt-4">
+	<div class="card-body">
+		<div class="">
 
 
-				<div class="row g-3 mt-2 justify-content-center">
-					{{score}} / 2000
+
+			<div class="row g-3">
+				<div class="col">
 					
 				</div>
-
-
+				<div class="col-4">
+					<h5 class="card-title">Total Score</h5>
+					{{totalScore}}
+					
+				</div>
+				<div class="col"></div>
 
 			</div>
+
+
+
 		</div>
 	</div>
+</div>
 
 
 
