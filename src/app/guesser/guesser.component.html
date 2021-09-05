@@ -2,14 +2,24 @@
 <!-- remove container -->
 
 
-<div class="card text-white bg-primary text-center">
+<div class="card text-white bg-primary text-center border border-dark" >
 	<div class="card-body">
-		<h5 class="card-title">ELOguesser</h5>
+		<h5 class="card-title">Guess the ELO!</h5>
 		<div class="card-text">
 
 			<div class="row g-3 mt-2 justify-content-center">
-				Maybe some text here with extra info and stuff but idk.
+			 
+				This is a chess.com rated blitz game. Players are within 200 elo of each other.
+				<br>
+				
+				
 			</div>
+			<hr>
+			<div class="row g-3 mt-2 justify-content-center">
+				Round {{gamesPlayed + 1}}/{{this.eloService.gameCount + gamesPlayed}}
+				
+			</div>
+			
 
 			<form *ngIf="score===-1; else elseBlock" (ngSubmit)="setScore(guess.value)">
 				<div class="row g-3 mt-2 justify-content-center">
@@ -23,16 +33,16 @@
 				</div>
 				<div class="row g-3 mt-1 justify-content-center">
 					<div class="col-3">
-						<button class="btn btn-secondary px-3" type="submit">Submit</button>
+						<button class="btn btn-secondary px-3 border border-dark" type="submit">Submit</button>
 					</div>
 				</div>
 			</form>
 
-			<ng-template #elseBlock>
+			<ng-template #elseBlock >
 				<div class="row g-3 mt-1 justify-content-center">
 					<div class="col-6">
 						<div>
-							You scored: {{score}}/2000
+							You scored: {{score}}/1000
 						</div>
 						<div>
 							You guessed {{guess.value}} but the real ELO was {{avgElo}}.
@@ -43,7 +53,8 @@
 
 				<div class="row g-3 mt-1 justify-content-center">
 					<div class="col-3">
-						<button class="btn btn-success px-3" (click)="nextGame()">Next</button>
+						<button *ngIf = "this.eloService.gameCount > 1" class="btn btn-success px-3 border border-dark" (click)="nextGame()">Next</button>
+						<button *ngIf = "this.eloService.gameCount <= 1" class="btn btn-light px-3 border border-dark" (click)="nextGame()">New game</button>
 					</div>
 				</div>
 			</ng-template>
@@ -56,7 +67,7 @@
 
 
 
-<div class="card text-white bg-primary text-center mt-4">
+<div class="card text-white bg-primary text-center mt-4 border border-dark">
 	<div class="card-body">
 		<div class="">
 
@@ -68,7 +79,7 @@
 				</div>
 				<div class="col-4">
 					<h5 class="card-title">Total Score</h5>
-					{{totalScore}}
+					{{totalScore}}/{{1000*(this.eloService.gameCount + this.gamesPlayed)}}
 
 				</div>
 				<div class="col"></div>

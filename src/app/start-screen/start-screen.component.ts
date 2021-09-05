@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import Game from '../models/game';
 import { EloService } from '../services/elo.service';
 
 @Component({
@@ -12,6 +13,7 @@ export class StartScreenComponent implements OnInit {
   constructor(public eloService: EloService) { }
 
   ngOnInit(): void {
+    this.eloService.setNextGS(new Game()) // set desired start screen game in constructor
   }
 
   startGame(count:number){

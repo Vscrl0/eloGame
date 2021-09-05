@@ -12,7 +12,8 @@ export class GuesserComponent implements OnInit {
 	score = -1;
 	guess = new FormControl();
 	totalScore = 0;
-	constructor(private eloService: EloService) { }
+	gamesPlayed = 0;
+	constructor(public eloService: EloService) { }
 
 	ngOnInit(): void {
 		if (!this.eloService.gameCount) {
@@ -32,8 +33,16 @@ export class GuesserComponent implements OnInit {
 	}
 
 	nextGame() {
-		this.score = -1;
-		this.guess.setValue("");
-		this.eloService.nextGame();
+		if (this.eloService.gameCount > 1) {
+			this.score = -1;
+			this.guess.setValue("");
+			this.eloService.nextGame();
+			this.eloService.gameCount--;
+			this.gamesPlayed++;
+		}else{
+			this.eloService.goHome();
+			
+		}
+
 	}
 }
