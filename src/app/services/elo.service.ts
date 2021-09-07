@@ -9,8 +9,8 @@ import Game from '../models/game';
 })
 export class EloService {
 	gameCount!: number;
-	prevScore=0;
-	scores!:Array<Array<number>>;
+	prevScore = 0;
+	scores!: Array<Array<number>>;
 
 	getElo$: Observable<number>;
 	getGame$: Observable<any>;
@@ -31,37 +31,30 @@ export class EloService {
 	// }
 
 	nextGame() {
-		if (this.gameCount > 0) {
-
-			this.http.get("http://35.224.173.125/").subscribe(res => {
-				this.getGameSubject.next(res);
-				this.gameCount--;
-			});
-		}
-		else{
-			this.goHome();
-		}
+		this.http.get("http://35.224.173.125/").subscribe(res => {
+			this.getGameSubject.next(res);
+		});
 	}
 
 	startGame(gameCount: number) {
 		this.gameCount = gameCount;
-		console.log("games: "+gameCount);
-		this.prevScore=0;
-		this.scores=[];
+		console.log("games: " + gameCount);
+		this.prevScore = 0;
+		this.scores = [];
 		this.nextGame();
 		this.router.navigate(["guess"]);
 	}
 
-	addScore(me:number,real:number,points:number){
-		this.scores.push([me,real,points]);
-		this.prevScore+=points;
+	addScore(me: number, real: number, points: number) {
+		this.scores.push([me, real, points]);
+		this.prevScore += points;
 	}
 
-	goHome(){
+	goHome() {
 		this.router.navigate([""]);
 	}
 
-	clearBoard(){
-		this.getGameSubject.next(new Game(0,0,"",""));
+	clearBoard() {
+		this.getGameSubject.next(new Game());
 	}
 }

@@ -16,8 +16,7 @@ import { StartScreenComponent } from './start-screen/start-screen.component'
     AppComponent,
     HomeComponent,
     GuesserComponent,
-    StartScreenComponent,
-    EndComponent
+    StartScreenComponent
     
   ],
   imports: [
