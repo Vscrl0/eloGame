@@ -42,8 +42,10 @@ export class EloService {
 	}
 
 
-
 	goHome(){
 		this.router.navigate([""]);
+	}
+	setNextGS(game: Game) {
+		return this.getGameSubject.next(game)
 	}
 }

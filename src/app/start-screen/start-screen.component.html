@@ -1,25 +1,25 @@
-<div class="card text-white bg-success text-center">
+<div class="card text-white bg-success text-center border border-dark">
 	<div class="card-body">
-		<h5 class="card-title">ELOguesser</h5>
+		<h5 class="card-title">Guess the ELO!</h5>
 		<div class="card-text">
 
 
 			<div class="row g-3 mt-2 justify-content-center">
-				Maybe some text here with extra info and stuff but idk.
+				
 			</div>
 
 			<div class="row g-3 mt-2 justify-content-center">
 
 				<div class="col-auto">
-					<label for="round" class="col-form-label">How many rounds</label>
+					<label for="round" class="col-form-label">How many rounds?</label>
 				</div>
 				<div class="col-2">
-					<input type="number" id="round" [(ngModel)] = "gameCount" class="form-control" placeholder="5">
+					<input type="number" id="round" [(ngModel)] = "gameCount" class="form-control" placeholder="5" min=1 max=20>
 				</div>
 			</div>
 			<div class="row g-3 mt-1 justify-content-center">
 				<div class="col-3">
-					<button class="btn btn-secondary px-3" (click)="startGame(gameCount)">Start Game</button>
+					<button class="btn btn-secondary px-3 border border-dark" (click)="startGame(gameCount)">Start Game</button>
 				</div>
 			</div>
 

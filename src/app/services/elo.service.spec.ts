@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { EloServiceService } from './elo-service.service';
+import { EloService } from './elo.service';
 
 describe('EloServiceService', () => {
-  let service: EloServiceService;
+  let service: EloService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(EloServiceService);
+    service = TestBed.inject(EloService);
   });
 
   it('should be created', () => {
