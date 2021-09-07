@@ -8,7 +8,9 @@ import Game from '../models/game';
 	providedIn: 'root'
 })
 export class EloService {
-	gameCount!:number;
+	gameCount!: number;
+	prevScore=0;
+	scores!:Array<Array<number>>;
 
 	getElo$: Observable<number>;
 	getGame$: Observable<any>;
@@ -18,6 +20,7 @@ export class EloService {
 	constructor(private http: HttpClient, private router: Router) {
 		this.getElo$ = this.getEloSubject.asObservable();
 		this.getGame$ = this.getGameSubject.asObservable();
+		this.clearBoard();
 	}
 
 	getElo(data: number) {
@@ -28,24 +31,37 @@ export class EloService {
 	// }
 
 	nextGame() {
-		this.http.get("http://35.224.173.125/").subscribe(res=>{
-			console.log("hit api");
-			this.getGameSubject.next(res);
-			
-		});
+		if (this.gameCount > 0) {
+
+			this.http.get("http://35.224.173.125/").subscribe(res => {
+				this.getGameSubject.next(res);
+				this.gameCount--;
+			});
+		}
+		else{
+			this.goHome();
+		}
 	}
 
-	startGame(gameCount:number){
-		this.gameCount=gameCount;
+	startGame(gameCount: number) {
+		this.gameCount = gameCount;
+		console.log("games: "+gameCount);
+		this.prevScore=0;
+		this.scores=[];
 		this.nextGame();
 		this.router.navigate(["guess"]);
 	}
 
+	addScore(me:number,real:number,points:number){
+		this.scores.push([me,real,points]);
+		this.prevScore+=points;
+	}
 
 	goHome(){
 		this.router.navigate([""]);
 	}
-	setNextGS(game: Game) {
-		return this.getGameSubject.next(game)
+
+	clearBoard(){
+		this.getGameSubject.next(new Game(0,0,"",""));
 	}
 }

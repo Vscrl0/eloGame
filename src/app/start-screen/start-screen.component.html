@@ -3,6 +3,23 @@
 		<h5 class="card-title">Guess the ELO!</h5>
 		<div class="card-text">
 
+			
+
+			<div *ngIf="eloService.prevScore!==0" class="row g-3 mt-2 justify-content-center">
+				<span>Total Points: <span class="fw-bold">{{eloService.prevScore}}</span></span>
+				<table>
+					<tr>
+						<th>Guess</th>
+						<th>Answer</th>
+						<th>Points</th>
+					</tr>
+					<tr *ngFor="let stuff of eloService.scores">
+						<td>{{stuff[0]}}</td>
+						<td>{{stuff[1]}}</td>
+						<td>{{stuff[2]}}</td>
+					</tr>
+				</table>
+			</div>
 
 			<div class="row g-3 mt-2 justify-content-center">
 				
@@ -22,6 +39,8 @@
 					<button class="btn btn-secondary px-3 border border-dark" (click)="startGame(gameCount)">Start Game</button>
 				</div>
 			</div>
+
+
 
 
 

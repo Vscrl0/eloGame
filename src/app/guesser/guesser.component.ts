@@ -30,6 +30,8 @@ export class GuesserComponent implements OnInit {
 		// this.score = Math.max(0, 2000 - Math.abs(elo - this.avgElo));
 		this.score = Math.floor(1000/(Math.sqrt(0.00002*Math.pow((this.avgElo-elo), 2) + 1)));
 		this.totalScore += this.score;
+
+		this.eloService.addScore(elo,this.avgElo,this.score);
 	}
 
 	nextGame() {
